@@ -1,17 +1,24 @@
 import express from "express";
 import { config } from "dotenv";
+import { goalRoutes } from "./routes/goal.routes.js";
+import { errorHandler } from "./middelware/error.middleware.js";
+import { connectDB } from "./config/db.config.js";
 
 config();
+
+connectDB(process.env.MONGO_URI);
 
 const app = express();
 const port = process.env.PORT;
 
-app.get("/api/v1/goals", (req, res) => {
-  res.json({
-    message: "Get Goals",
-  });
-  //   res.send("Hello World");
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use("/api/v1/goals", goalRoutes);
+
+// error middleware
+app.use(errorHandler);
 
 // server runing on
 app.listen(port, () => {
