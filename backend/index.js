@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { goalRoutes } from "./routes/goal.routes.js";
 import { errorHandler } from "./middelware/error.middleware.js";
 import { connectDB } from "./config/db.config.js";
+import { UserRoutes } from "./routes/user.routes.js";
 
 config();
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/v1/goals", goalRoutes);
+app.use("/api/v1/users", UserRoutes);
 
 // error middleware
 app.use(errorHandler);
