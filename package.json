@@ -16,6 +16,10 @@
   "scripts": {
     "start": "node backend/index.js",
     "serve": "nodemon backend/index.js",
-    "client": "yarn dev --prefix frontend"
+    "client": "yarn dev --prefix frontend",
+    "dev": "concurrently \"yarn serve\" \" yarn run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

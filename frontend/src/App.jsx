@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./components/Header";
+import { MainToasts } from "./features/Toasts.Service";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           </Routes>
         </div>
       </Router>
+
+      <MainToasts />
     </>
   );
 }

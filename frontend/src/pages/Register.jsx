@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import {
+  ShowErrorMessage,
+  ShowSuccessMessage,
+} from "../features/Toasts.Service";
+import { register, reset } from "../features/auth/AuthSlice";
+import Spinner from "../components/Spinner";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +20,25 @@ const Register = () => {
 
   const { name, email, password, password2 } = formData;
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      ShowErrorMessage(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isLoading, isSuccess, message]);
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -20,7 +48,23 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== password2) {
+      ShowErrorMessage("Passwords does not Match");
+    } else {
+      const userdata = {
+        name,
+        email,
+        password,
+      };
+
+      dispatch(register(userdata));
+    }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -57,7 +101,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="password"
               id="password"
@@ -68,7 +112,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="password2"
               id="password2"
