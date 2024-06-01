@@ -4,6 +4,7 @@ import { goalRoutes } from "./routes/goal.routes.js";
 import { errorHandler } from "./middelware/error.middleware.js";
 import { connectDB } from "./config/db.config.js";
 import { UserRoutes } from "./routes/user.routes.js";
+import cors from "cors";
 
 config();
 
@@ -14,6 +15,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Routes
 app.use("/api/v1/goals", goalRoutes);
