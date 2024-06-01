@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "node backend/index.js",
-    "serve": "nodemon backend/index.js"
+    "serve": "nodemon backend/index.js",
+    "client": "yarn dev --prefix frontend"
   }
 }
